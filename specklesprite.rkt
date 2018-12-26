@@ -65,13 +65,19 @@
 
 
 (define (batch-gen num-iter)
-  (let ([cur-outs (map (lambda (x) (string-append "out-" (number->string x) ".png"))
+  (let ([cur-outs (map (lambda (x) (string-append "speckles/out-" (number->string x) ".png"))
 		       (range num-iter))])
     (map (lambda (x)
 	 (generate-sprites cur-num-frames cur-num-colors x cur-sq-dim cur-row-sz)
 	 ) cur-outs)
     )
   )
+
+
+
+;; runtime exec
+(when (not (directory-exists? "speckles"))
+  (make-directory "speckles"))
 
 (let ([cur-num ((compose string->number vector-ref) (current-command-line-arguments) 0)])
   (batch-gen cur-num))
